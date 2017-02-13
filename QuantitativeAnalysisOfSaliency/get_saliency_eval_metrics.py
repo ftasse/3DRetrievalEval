@@ -377,13 +377,6 @@ def computeMetrics(models_dir, saliency_map_dirs, gt_interest_points_dir, metric
         num_samples = 20
         if (n1 == 1):
           num_samples = len(user_ids)
-        # for it in itertools.combinations(user_ids, n1):
-        #   if (n2 <= 0):
-        #     partitions.append({'left': list(it), 'right':list(set(user_ids) - set(it))})
-        #   else:
-        #     rest = list(set(user_ids) - set(it))
-        #     for it2 in itertools.combinations(rest, n2):
-        #       partitions.append({'left': list(it), 'right':list(it2)})
         for l in range(num_samples):
           if (n1 == 1):
             it = [user_ids[l]]
@@ -408,7 +401,7 @@ def computeMetrics(models_dir, saliency_map_dirs, gt_interest_points_dir, metric
           params = {}
           left = np.array(gt_interest_points_per_user)[partition['left']]
           right = np.array(gt_interest_points_per_user)[partition['right']]
-          # print list(set([x for l in right for x in l]))
+
           params['saliency_map'] = computeSaliencyFromKeypoints(V, F, left, geodesic_map, sigma)
           params['gt_saliency_map'] = computeSaliencyFromKeypoints(V, F, right, geodesic_map, sigma)
           params['gt_interest_points'] = list(set([x for l in right for x in l]))
@@ -464,7 +457,10 @@ def computeMetrics(models_dir, saliency_map_dirs, gt_interest_points_dir, metric
 def main():
   # Requirements:
     # Ground-truth (GS)  (Get it from Schelling Points website and uncompress it in saliency_maps/watertight_track/GS)
+    # http://gfx.cs.princeton.edu/pubs/Chen_2012_SPO/SchellingData.zip
+
     # Cluster-based point set saliency (CS) (already present in saliency_maps/watertight_track/CS)
+    
     # 3D Models: Get the 400 models from the Watertight Track Challenge (2007) and plce them in data/watertight_track/
 
   data_dir = 'saliency_maps/watertight_track/'
